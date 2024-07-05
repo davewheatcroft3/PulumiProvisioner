@@ -1,0 +1,50 @@
+﻿name: Github Actions Example - Pulimu AWS Orchestrator
+
+on:
+  push:
+    branches:
+    - 'master'
+    paths:
+    - 'src/<MyProject>/**'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    env: 
+
+      DOTNET_CORE_VERSION: 8.0.x
+      CONFIGURATION: Release
+      TARGET_ARCHITECTURE: linux-arm64
+      INFRA_WORKING_DIRECTORY: src/<My Project>/Infrastructure
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+      AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+      AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
+      PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+      PULUMI_STACK_NAME: <organisation>/<project name>/<stack name>
+
+    steps:
+      - name: Checkout Code from Repository
+        uses: actions/checkout@v4
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
+      - name: Install AWS CLI
+        run: dotnet tool install -g Amazon.Lambda.Tools
+      - name: Build Infrastructure
+        run: dotnet build ${{ env.INFRA_WORKING_DIRECTORY }} -c ${{ env.CONFIGURATION }} -r ${{ env.TARGET_ARCHITECTURE }} --self-contained
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ env.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+      - name: Provision Infrastructure with Pulumi
+        uses: pulumi/actions@v5
+        with:
+          command: up
+          stack-name: ${{ env.PULUMI_STACK_NAME }}
+          upsert: true
+          work-dir: ${{ env.INFRA_WORKING_DIRECTORY }}
