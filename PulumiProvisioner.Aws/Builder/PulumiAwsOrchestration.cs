@@ -7,17 +7,10 @@ namespace PulumiProvisioner.Aws.Builder
     {
         private readonly List<Func<Dictionary<string, object?>>> _buildActions = [];
 
-        public IPulumiOrchestrationBuilder AddDocumentStorage(string tableName, string primaryKeyIdField)
+        public IPulumiDatabaseBuilder AddStorage(string name)
         {
-            AddBuildAction(() =>
-            {
-                var table = new Document(tableName, primaryKeyIdField);
-                return new Dictionary<string, object?>
-                {
-                    { $"Table:{tableName}-Id", table.Id }
-                };
-            });
-            return this;
+            var builder = new PulumiAwsDatabaseBuilder(this);
+            return builder;
         }
 
         public IPulumiOrchestrationBuilder AddEmailSender(string name)

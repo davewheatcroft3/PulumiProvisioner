@@ -5,9 +5,9 @@ namespace PulumiProvisioner.Azure
 {
     public static class PulumiOrchestration
     {
-        public static IPulumiOrchestrationBuilder CreateBuilder()
+        public static IPulumiOrchestrationBuilder CreateBuilder(string resourceGroupName)
         {
-            var builder = new PulumiAzureOrchestrationBuilder();
+            var builder = new PulumiAzureOrchestrationBuilder(resourceGroupName);
             return builder;
         }
     }

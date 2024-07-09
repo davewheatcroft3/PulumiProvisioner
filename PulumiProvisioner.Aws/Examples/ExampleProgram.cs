@@ -12,7 +12,9 @@ public class ExampleProgram
     {
         return await Deployment.RunAsync(builder =>
         {
-            builder.AddDocumentStorage("ExampleTable", "Id");
+            builder
+                .AddStorage("Database")
+                .AddDocument("ExampleTable", "Id");
 
             builder.AddEmailSender(ApplicationName);
 
@@ -37,7 +39,9 @@ public class ExampleProgram
         return await Pulumi.Deployment.RunAsync(() =>
         {
             // new PulimiAwsProvisioner.Templates.Table(...);
-            builder.AddDocumentStorage("MyTable", "Id");
+            builder
+                .AddStorage("Database")
+                .AddDocument("MyTable", "Id");
 
             // TODO: Email sender template here
             builder.AddEmailSender(ApplicationName);

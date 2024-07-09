@@ -5,9 +5,9 @@ namespace PulumiProvisioner.Azure
 {
     public static class Deployment
     {
-        public static async Task<int> RunAsync(Action<IPulumiOrchestrationBuilder> action)
+        public static async Task<int> RunAsync(string resourceGroupName, Action<IPulumiOrchestrationBuilder> action)
         {
-            var builder = new PulumiAzureOrchestrationBuilder();
+            var builder = new PulumiAzureOrchestrationBuilder(resourceGroupName);
             return await Pulumi.Deployment.RunAsync(() =>
             {
                 action(builder);

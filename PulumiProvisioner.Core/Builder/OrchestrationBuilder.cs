@@ -7,13 +7,7 @@
     /// </summary>
     public interface IPulumiOrchestrationBuilder
     {
-        /// <summary>
-        /// Adds a document storage table (AWS Dynamo DB) with a given primary key field.
-        /// </summary>
-        /// <param name="tableName">Table name</param>
-        /// <param name="primaryKeyIdField">Primary key name that will be your primary key field</param>
-        /// <returns>Build instance</returns>
-        IPulumiOrchestrationBuilder AddDocumentStorage(string tableName, string primaryKeyIdField);
+        IPulumiDatabaseBuilder AddStorage(string name);
 
         IPulumiOrchestrationBuilder AddEmailSender(string name);
 
