@@ -7,13 +7,18 @@ namespace PulumiProvisioner.Aws.Builder
     {
         private readonly List<Func<Dictionary<string, object?>>> _buildActions = [];
 
-        public IPulumiDatabaseBuilder AddStorage(string name)
+        public IPulumiDatabaseBuilder AddDataStorage(string name)
         {
             var builder = new PulumiAwsDatabaseBuilder(this);
             return builder;
         }
 
         public IPulumiOrchestrationBuilder AddEmailSender(string name)
+        {
+            throw new NotImplementedException("Not yet implemented - but plan to - see Readme");
+        }
+
+        public IPulumiOrchestrationBuilder AddFileStorage(string name)
         {
             throw new NotImplementedException("Not yet implemented - but plan to - see Readme");
         }

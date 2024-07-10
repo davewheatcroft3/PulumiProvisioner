@@ -7,7 +7,7 @@ namespace PulumiProvisioner.Azure.Builder
     {
         private readonly List<Func<Dictionary<string, object?>>> _buildActions = [];
 
-        public IPulumiDatabaseBuilder AddStorage(string name)
+        public IPulumiDatabaseBuilder AddDataStorage(string name)
         {
             AddBuildAction(() =>
             {
@@ -20,6 +20,11 @@ namespace PulumiProvisioner.Azure.Builder
         }
 
         public IPulumiOrchestrationBuilder AddEmailSender(string name)
+        {
+            throw new NotImplementedException("Not yet implemented");
+        }
+
+        public IPulumiOrchestrationBuilder AddFileStorage(string name)
         {
             throw new NotImplementedException("Not yet implemented");
         }

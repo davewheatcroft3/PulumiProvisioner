@@ -7,9 +7,11 @@
     /// </summary>
     public interface IPulumiOrchestrationBuilder
     {
-        IPulumiDatabaseBuilder AddStorage(string name);
+        IPulumiDatabaseBuilder AddDataStorage(string name);
 
         IPulumiOrchestrationBuilder AddEmailSender(string name);
+
+        IPulumiOrchestrationBuilder AddFileStorage(string name);
 
         IPulumiApplicationBuilder AddWebApi(string apiName, string codeDirectory, string apiProjectName);
 
